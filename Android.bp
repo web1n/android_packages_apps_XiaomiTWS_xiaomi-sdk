@@ -1,4 +1,24 @@
 cc_prebuilt_library_shared {
+    name: "libspatial",
+    arch: {
+        arm: {
+            srcs: ["jniLibs/armeabi-v7a/libspatial.so"],
+        },
+        arm64: {
+            srcs: ["jniLibs/arm64-v8a/libspatial.so"],
+        },
+    },
+    shared_libs: [
+        "libhidlbase",
+    ],
+    strip: {
+        none: true,
+    },
+    check_elf_files: false,
+    stl: "none",
+}
+
+cc_prebuilt_library_shared {
     name: "libxm_bluetooth",
     arch: {
         arm: {
@@ -16,10 +36,21 @@ cc_prebuilt_library_shared {
 }
 
 android_library {
-    name: "com.xiaomi.aivsbluetoothsdk",
+    name: "xiaomi.bluetoothsdk.auth",
     sdk_version: "current",
     srcs: [
-        "src/**/*.kt",
+        "src/com/xiaomi/aivsbluetoothsdk/impl/BluetoothAuth.kt",
+    ],
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+}
+
+android_library {
+    name: "xiaomi.bluetoothsdk.spatial",
+    sdk_version: "current",
+    srcs: [
+        "src/com/android/bluetooth/ble/app/headset/Spatialcontroller.kt",
     ],
     optimize: {
         proguard_flags_files: ["proguard.flags"],
